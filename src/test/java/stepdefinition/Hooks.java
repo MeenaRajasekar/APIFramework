@@ -1,13 +1,17 @@
-package StepDefinition;
+package stepdefinition;
+
+import java.io.IOException;
 
 import io.cucumber.java.Before;
 
 public class Hooks {
 
-	@Before("@DeletePlace")
-	public void beforeScenario() {
+	//@Before("@DeletePlace")
+	public void beforeScenario() throws IOException {
 		
-		StepDefinition m=new StepDefinition();
+		//StepDefinition m=new StepDefinition();
+		
+		StepDefinition m = new StepDefinition();
 		
 		if(StepDefinition.place_id==null) //calling the variable place_id with class Name not with Object because static variables are tied up with class memeory not with object memeory
 		{

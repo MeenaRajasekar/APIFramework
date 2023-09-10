@@ -1,25 +1,21 @@
-package StepDefinition;
+package stepdefinition;
 
 import static org.junit.Assert.assertEquals;
+import static io.restassured.RestAssured.given;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import java.io.IOException;
 import Resources.APIResources;
 import Resources.TestDataBuild;
 import Resources.Utils;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import pojo.AddPlace;
-import pojo.Location;
 
 public class StepDefinition extends Utils {
 	
@@ -28,19 +24,22 @@ public class StepDefinition extends Utils {
 	Response response;
 	static String place_id;
 	
-	
-	TestDataBuild data=new TestDataBuild();
-	
-	@Given("Add Place Payload with {String} {String} {String} ")
-	public void add_place_payload_with(String name, String language, String address)
-	{
-	
-		
-		res=given().spec(requestSpecification()).body(data.addPlacePayload(name, language, address));
-	}
+	TestDataBuild data= new TestDataBuild();
 	
 	
-	@When("user calls {string} with {String} http request")
+	//TestData
+	
+//	@Given("Add Place Payload with {String} {String} {String} ")
+//	public void add_place_payload_with(String name, String language, String address) throws IOException
+//	{
+//		
+//		System.out.println("TEsting");
+//		
+//		res=given().spec(requestSpecification()).body(data.addPlacePayload(name, language, address));
+//	}
+//	
+	
+	@When("user calls {String} with {String} http request")
 	public void user_calls_with_http_request(String resource, String method)
 	{   
 		//constructor will be called with value of resource you pass
@@ -68,7 +67,7 @@ public class StepDefinition extends Utils {
 	}
 	
 	@Then("verify place_id created maps to {String} using {String}")
-	public void verify_place_id_created_maps_to (String resource, String expectedname)
+	public void verify_place_id_created_maps_to (String resource, String expectedname) throws IOException
 	{
 		
 		place_id=getJsonPath(response, "place_id");
@@ -80,7 +79,7 @@ public class StepDefinition extends Utils {
      }
 	
 	@Given("DeletePlace Payload")
-	public void delete_place_Payload() {
+	public void delete_place_Payload() throws IOException {
 		
 		
 		res=given().spec(requestSpecification()).body(data.deletePlacePayload(place_id));
